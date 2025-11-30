@@ -1,0 +1,84 @@
+\begin{table}
+\caption{Results: Ordinary least squares}
+\label{}
+\begin{center}
+\begin{tabular}{llll}
+\hline
+Model:              & OLS              & Adj. R-squared:     & 0.527          \\
+Dependent Variable: & data\_value      & AIC:                & 30773284.7344  \\
+Date:               & 2025-11-07 14:58 & BIC:                & 30773851.4119  \\
+No. Observations:   & 3908036          & Log-Likelihood:     & -1.5387e+07    \\
+Df Model:           & 42               & F-statistic:        & 1.035e+05      \\
+Df Residuals:       & 3907993          & Prob (F-statistic): & 0.00           \\
+R-squared:          & 0.527            & Scale:              & 153.93         \\
+\hline
+\end{tabular}
+\end{center}
+
+\begin{center}
+\begin{tabular}{lrrrrrr}
+\hline
+                                                                   &          Coef. &        Std.Err. &        t & P$> |$t$|$ &           [0.025 &          0.975]  \\
+\hline
+Intercept                                                          &        -9.2565 &          0.2173 & -42.5897 &      0.0000 &          -9.6825 &         -8.8305  \\
+C(age)[T.18-39 years]                                              &         0.9127 &          0.1940 &   4.7058 &      0.0000 &           0.5326 &          1.2929  \\
+C(age)[T.40 years and older]                                       &         5.8781 &          0.1930 &  30.4535 &      0.0000 &           5.4998 &          6.2564  \\
+C(age)[T.40-64 years]                                              &         3.2038 &          0.1933 &  16.5755 &      0.0000 &           2.8250 &          3.5826  \\
+C(age)[T.65 years and older]                                       &         6.1061 &          0.1930 &  31.6389 &      0.0000 &           5.7279 &          6.4844  \\
+C(age)[T.65-84 years]                                              &         6.0347 &          0.1930 &  31.2617 &      0.0000 &           5.6563 &          6.4130  \\
+C(age)[T.85 years and older]                                       &         5.7714 &          0.1932 &  29.8696 &      0.0000 &           5.3927 &          6.1501  \\
+C(age)[T.All ages]                                                 &         5.7049 &          0.1924 &  29.6576 &      0.0000 &           5.3279 &          6.0820  \\
+C(sex)[T.Male]                                                     &        -0.5352 &          0.0126 & -42.6179 &      0.0000 &          -0.5598 &         -0.5106  \\
+C(raceethnicity)[T.Black, non-Hispanic]                            &        -0.2163 &          0.0217 &  -9.9621 &      0.0000 &          -0.2588 &         -0.1737  \\
+C(raceethnicity)[T.Hispanic, any race]                             &        -0.0538 &          0.0218 &  -2.4611 &      0.0139 &          -0.0966 &         -0.0109  \\
+C(raceethnicity)[T.North American Native]                          &        -1.1998 &          0.0241 & -49.8148 &      0.0000 &          -1.2470 &         -1.1526  \\
+C(raceethnicity)[T.Other]                                          &         0.3416 &          0.0229 &  14.9161 &      0.0000 &           0.2967 &          0.3864  \\
+C(raceethnicity)[T.White, non-Hispanic]                            &         0.1590 &          0.0207 &   7.6813 &      0.0000 &           0.1184 &          0.1995  \\
+C(topic)[T.Service Utilization]                                    & -66260972.9699 & 4513612645.3452 &  -0.0147 &      0.9883 & -8912781937.9127 & 8780259991.9729  \\
+C(category)[T.Any eye condition]                                   &        46.2608 &          0.0705 & 655.7332 &      0.0000 &          46.1226 &         46.3991  \\
+C(category)[T.Cancer and Neoplasms of the Eye]                     &        -2.0828 &          0.0532 & -39.1717 &      0.0000 &          -2.1870 &         -1.9786  \\
+C(category)[T.Cataract Surgery]                                    &  66260984.3102 & 4513612645.3259 &   0.0147 &      0.9883 & -8780259980.5948 & 8912781949.2152  \\
+C(category)[T.Cataracts]                                           &         9.6237 &          0.0350 & 275.0113 &      0.0000 &           9.5551 &          9.6923  \\
+C(category)[T.Cornea Disorders]                                    &        -1.8887 &          0.0428 & -44.1207 &      0.0000 &          -1.9726 &         -1.8048  \\
+C(category)[T.Diabetic Eye Diseases]                               &         0.3953 &          0.0371 &  10.6491 &      0.0000 &           0.3225 &          0.4680  \\
+C(category)[T.Diagnosed Blindness and Low Vision]                  &        -2.4914 &          0.0594 & -41.9271 &      0.0000 &          -2.6078 &         -2.3749  \\
+C(category)[T.Disorders of Optic Nerve and Visual Pathways]        &        -2.1293 &          0.0514 & -41.4317 &      0.0000 &          -2.2300 &         -2.0286  \\
+C(category)[T.Disorders of Refraction and Accommodation]           &         3.3272 &          0.0598 &  55.6828 &      0.0000 &           3.2101 &          3.4443  \\
+C(category)[T.Eye Exams]                                           &  66261021.7579 & 4513612645.3466 &   0.0147 &      0.9883 & -8780259943.1877 & 8912781986.7035  \\
+C(category)[T.Glaucoma]                                            &         3.5038 &          0.0364 &  96.3428 &      0.0000 &           3.4326 &          3.5751  \\
+C(category)[T.Imaging or diagnostic test]                          &  66260988.6570 & 4513612645.3516 &   0.0147 &      0.9883 & -8780259976.2983 & 8912781953.6124  \\
+C(category)[T.Infectious and Inflammatory Diseases]                &         0.3226 &          0.0374 &   8.6259 &      0.0000 &           0.2493 &          0.3960  \\
+C(category)[T.Injury, Burns and Surgical Complications of the Eye] &        -2.1926 &          0.0471 & -46.5915 &      0.0000 &          -2.2848 &         -2.1003  \\
+C(category)[T.Orbital and External Disease]                        &         2.0079 &          0.0385 &  52.0942 &      0.0000 &           1.9323 &          2.0834  \\
+C(category)[T.Other Eye Disorders]                                 &         8.3036 &          0.0749 & 110.8778 &      0.0000 &           8.1568 &          8.4504  \\
+C(category)[T.Other Retinal Disorders]                             &        -0.8468 &          0.0333 & -25.4514 &      0.0000 &          -0.9120 &         -0.7816  \\
+C(category)[T.Other Visual Disturbances]                           &        -1.3767 &          0.0428 & -32.1585 &      0.0000 &          -1.4606 &         -1.2928  \\
+C(category)[T.Retinal Detachment and Defects]                      &        -2.1451 &          0.0858 & -25.0151 &      0.0000 &          -2.3132 &         -1.9770  \\
+C(category)[T.Screening]                                           &  66260969.9906 & 4513612645.3570 &   0.0147 &      0.9883 & -8780259994.9754 & 8912781934.9566  \\
+C(category)[T.Strabismus and Amblyopia]                            &        -2.2415 &          0.0543 & -41.3123 &      0.0000 &          -2.3479 &         -2.1352  \\
+C(category)[T.Treatment for RVO]                                   &  66260993.3521 & 4513612645.3511 &   0.0147 &      0.9883 & -8780259971.6023 & 8912781958.3066  \\
+C(category)[T.Treatment for age related macular degeneration]      &  66260975.0925 & 4513612645.3613 &   0.0147 &      0.9883 & -8780259989.8820 & 8912781940.0669  \\
+C(category)[T.Treatment for diabetic retinopathy]                  &  66260977.8285 & 4513612645.3452 &   0.0147 &      0.9883 & -8780259987.1143 & 8912781942.7713  \\
+C(category)[T.Treatment for glaucoma]                              &  66260985.9900 & 4513612645.3546 &   0.0147 &      0.9883 & -8780259978.9714 & 8912781950.9514  \\
+C(category)[T.Vision Correction]                                   &  66260970.1053 & 4513612645.3450 &   0.0147 &      0.9883 & -8780259994.8371 & 8912781935.0478  \\
+lag\_1                                                             &         0.6558 &          0.0128 &  51.1812 &      0.0000 &           0.6307 &          0.6809  \\
+lag\_2                                                             &         0.1124 &          0.0130 &   8.6766 &      0.0000 &           0.0870 &          0.1378  \\
+\hline
+\end{tabular}
+\end{center}
+
+\begin{center}
+\begin{tabular}{llll}
+\hline
+Omnibus:       & 1596667.297 & Durbin-Watson:    & 0.778           \\
+Prob(Omnibus): & 0.000       & Jarque-Bera (JB): & 12369955.951    \\
+Skew:          & 1.780       & Prob(JB):         & 0.000           \\
+Kurtosis:      & 10.955      & Condition No.:    & 30943216306573  \\
+\hline
+\end{tabular}
+\end{center}
+\end{table}
+\bigskip
+Notes: \newline 
+[1] Standard Errors assume that the covariance matrix of the errors is correctly specified. \newline 
+[2] The smallest eigenvalue is 7.56e-19. This might indicate that                there are strong multicollinearity problems or that the design                matrix is singular.

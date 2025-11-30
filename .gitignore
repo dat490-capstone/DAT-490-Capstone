@@ -1,0 +1,12 @@
+# Big file that breaks GitHub limit
+EDA/filtered_years.zip
+
+# (Optional) If you don't want huge raw data in the repo:
+Unfiltered_Data/
+filtered_years/
+*.zip
+
+# Python / Jupyter noise
+__pycache__/
+.ipynb_checkpoints/
+*.pyc

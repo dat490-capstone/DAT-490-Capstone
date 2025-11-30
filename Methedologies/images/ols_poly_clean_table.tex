@@ -1,0 +1,66 @@
+\begin{table}
+\caption{Results: Ordinary least squares}
+\label{}
+\begin{center}
+\begin{tabular}{llll}
+\hline
+Model:              & OLS              & Adj. R-squared:     & 0.566       \\
+Dependent Variable: & mean\_prevalence & AIC:                & 55283.1056  \\
+Date:               & 2025-11-07 15:01 & BIC:                & 55467.2678  \\
+No. Observations:   & 11690            & Log-Likelihood:     & -27617.     \\
+Df Model:           & 24               & F-statistic:        & 636.4       \\
+Df Residuals:       & 11665            & Prob (F-statistic): & 0.00        \\
+R-squared:          & 0.567            & Scale:              & 6.6133      \\
+\hline
+\end{tabular}
+\end{center}
+
+\begin{center}
+\begin{tabular}{lrrrrrr}
+\hline
+                                            &    Coef. & Std.Err. &        t & P$> |$t$|$ &   [0.025 &   0.975]  \\
+\hline
+Intercept                                   & -49.8126 &   3.1583 & -15.7718 &      0.0000 & -56.0035 & -43.6218  \\
+C(age)[T.18-39 years]                       &   2.7529 &   0.9790 &   2.8120 &      0.0049 &   0.8339 &   4.6720  \\
+C(age)[T.40 years and older]                &  11.3981 &   0.9784 &  11.6499 &      0.0000 &   9.4803 &  13.3159  \\
+C(age)[T.40-64 years]                       &   6.7120 &   0.9785 &   6.8595 &      0.0000 &   4.7940 &   8.6301  \\
+C(age)[T.65 years and older]                &  11.5962 &   0.9784 &  11.8521 &      0.0000 &   9.6784 &  13.5141  \\
+C(age)[T.65-84 years]                       &  11.4970 &   0.9784 &  11.7507 &      0.0000 &   9.5791 &  13.4148  \\
+C(age)[T.85 years and older]                &   9.5124 &   0.9786 &   9.7207 &      0.0000 &   7.5943 &  11.4306  \\
+C(age)[T.All ages]                          &  11.6045 &   0.9745 &  11.9081 &      0.0000 &   9.6943 &  13.5146  \\
+C(sex)[T.Male]                              &   0.1521 &   1.1225 &   0.1355 &      0.8922 &  -2.0483 &   2.3524  \\
+C(raceethnicity)[T.Black, non-Hispanic]     &   0.0712 &   0.0820 &   0.8685 &      0.3852 &  -0.0895 &   0.2319  \\
+C(raceethnicity)[T.Hispanic, any race]      &   0.4674 &   0.0817 &   5.7202 &      0.0000 &   0.3073 &   0.6276  \\
+C(raceethnicity)[T.North American Native]   &  -2.2191 &   0.0843 & -26.3140 &      0.0000 &  -2.3844 &  -2.0538  \\
+C(raceethnicity)[T.Other]                   &   0.1052 &   0.0826 &   1.2734 &      0.2029 &  -0.0567 &   0.2671  \\
+C(raceethnicity)[T.White, non-Hispanic]     &   0.7581 &   0.0817 &   9.2743 &      0.0000 &   0.5979 &   0.9183  \\
+C(age)[T.18-39 years]:C(sex)[T.Male]        &  -0.3813 &   1.1329 &  -0.3365 &      0.7365 &  -2.6018 &   1.8393  \\
+C(age)[T.40 years and older]:C(sex)[T.Male] &  -0.8527 &   1.1319 &  -0.7534 &      0.4512 &  -3.0713 &   1.3659  \\
+C(age)[T.40-64 years]:C(sex)[T.Male]        &  -0.4638 &   1.1321 &  -0.4097 &      0.6821 &  -2.6829 &   1.7553  \\
+C(age)[T.65 years and older]:C(sex)[T.Male] &  -0.8294 &   1.1319 &  -0.7328 &      0.4637 &  -3.0482 &   1.3893  \\
+C(age)[T.65-84 years]:C(sex)[T.Male]        &  -0.9042 &   1.1319 &  -0.7988 &      0.4244 &  -3.1230 &   1.3145  \\
+C(age)[T.85 years and older]:C(sex)[T.Male] &  -0.7277 &   1.1326 &  -0.6425 &      0.5206 &  -2.9478 &   1.4924  \\
+C(age)[T.All ages]:C(sex)[T.Male]           &  -0.8868 &   1.1252 &  -0.7881 &      0.4307 &  -3.0923 &   1.3188  \\
+lag\_1                                      &   7.0204 &   0.7386 &   9.5049 &      0.0000 &   5.5726 &   8.4682  \\
+I(lag\_1 ** 2)                              &  -0.3110 &   0.0379 &  -8.2050 &      0.0000 &  -0.3853 &  -0.2367  \\
+lag\_2                                      &   2.2313 &   0.6532 &   3.4160 &      0.0006 &   0.9509 &   3.5116  \\
+I(lag\_2 ** 2)                              &  -0.1195 &   0.0327 &  -3.6522 &      0.0003 &  -0.1837 &  -0.0554  \\
+\hline
+\end{tabular}
+\end{center}
+
+\begin{center}
+\begin{tabular}{llll}
+\hline
+Omnibus:       & 899.135 & Durbin-Watson:    & 1.991     \\
+Prob(Omnibus): & 0.000   & Jarque-Bera (JB): & 1248.647  \\
+Skew:          & -0.650  & Prob(JB):         & 0.000     \\
+Kurtosis:      & 3.935   & Condition No.:    & 23329     \\
+\hline
+\end{tabular}
+\end{center}
+\end{table}
+\bigskip
+Notes: \newline 
+[1] Standard Errors assume that the covariance matrix of the errors is correctly specified. \newline 
+[2] The condition number is large, 2.33e+04. This might indicate                that there are strong multicollinearity or other numerical                problems.

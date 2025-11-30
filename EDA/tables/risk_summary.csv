@@ -1,0 +1,82 @@
+yearstart,riskfactor_clean,risk_level,avg_impairment
+2018,Age-related macular degeneration,Total,25.58
+2019,Age-related macular degeneration,Total,27.347
+2020,Age-related macular degeneration,Total,27.369
+2021,Age-related macular degeneration,Total,21.228
+2022,Age-related macular degeneration,Total,21.513
+2018,All patients,Total,4.856
+2019,All patients,Total,5.102
+2020,All patients,Total,4.424
+2021,All patients,Total,4.659
+2022,All patients,Total,4.568
+2021,Any retinal vein occlusion,Total,26.324
+2022,Any retinal vein occlusion,Total,25.637
+2018,Cataract,Total,23.846
+2019,Cataract,Total,25.597
+2020,Cataract,Total,25.63
+2021,Cataract,Total,19.794
+2022,Cataract,Total,19.952
+2018,Diabetes,Total,6.742
+2019,Diabetes,Total,6.916
+2020,Diabetes,Total,6.066
+2021,Diabetes,Total,6.362
+2022,Diabetes,Total,6.141
+2018,Diabetes and AMD,Total,7.064
+2019,Diabetes and AMD,Total,7.593
+2020,Diabetes and AMD,Total,8.553
+2021,Diabetes and AMD,Total,6.667
+2022,Diabetes and AMD,Total,6.791
+2021,Diabetes and RVO,Total,28.544
+2022,Diabetes and RVO,Total,24.056
+2018,Diabetes and cataract,Total,14.72
+2019,Diabetes and cataract,Total,14.545
+2020,Diabetes and cataract,Total,13.426
+2021,Diabetes and cataract,Total,14.033
+2022,Diabetes and cataract,Total,13.992
+2018,Diabetes and diabetic retinopathy,Total,7.978
+2019,Diabetes and diabetic retinopathy,Total,8.341
+2020,Diabetes and diabetic retinopathy,Total,9.03
+2021,Diabetes and diabetic retinopathy,Total,8.607
+2022,Diabetes and diabetic retinopathy,Total,8.628
+2018,Diabetes and glaucoma,Total,1.709
+2019,Diabetes and glaucoma,Total,18.438
+2020,Diabetes and glaucoma,Total,18.628
+2021,Diabetes and glaucoma,Total,18.582
+2022,Diabetes and glaucoma,Total,18.188
+2018,Diabetic retinopathy,Total,24.047
+2019,Diabetic retinopathy,Total,25.754
+2020,Diabetic retinopathy,Total,25.292
+2021,Diabetic retinopathy,Total,20.639
+2022,Diabetic retinopathy,Total,20.736
+2018,Glaucoma,Total,26.445
+2019,Glaucoma,Total,30.833
+2020,Glaucoma,Total,30.363
+2021,Glaucoma,Total,24.592
+2022,Glaucoma,Total,24.539
+2018,Hypertension,Total,6.056
+2019,Hypertension,Total,6.297
+2020,Hypertension,Total,5.6
+2021,Hypertension,Total,5.896
+2022,Hypertension,Total,5.496
+2018,Hypertension and AMD,Total,6.82
+2019,Hypertension and AMD,Total,7.355
+2020,Hypertension and AMD,Total,8.302
+2021,Hypertension and AMD,Total,6.623
+2022,Hypertension and AMD,Total,6.852
+2021,Hypertension and RVO,Total,26.485
+2022,Hypertension and RVO,Total,21.717
+2018,Hypertension and cataract,Total,15.351
+2019,Hypertension and cataract,Total,15.046
+2020,Hypertension and cataract,Total,14.155
+2021,Hypertension and cataract,Total,14.765
+2022,Hypertension and cataract,Total,14.434
+2018,Hypertension and diabetic retinopathy,Total,8.143
+2019,Hypertension and diabetic retinopathy,Total,8.548
+2020,Hypertension and diabetic retinopathy,Total,9.249
+2021,Hypertension and diabetic retinopathy,Total,8.698
+2022,Hypertension and diabetic retinopathy,Total,8.675
+2018,Hypertension and glaucoma,Total,1.721
+2019,Hypertension and glaucoma,Total,17.912
+2020,Hypertension and glaucoma,Total,18.208
+2021,Hypertension and glaucoma,Total,18.453
+2022,Hypertension and glaucoma,Total,17.82

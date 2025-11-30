@@ -1,0 +1,349 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage[colorlinks=true, allcolors=blue]{hyperref}
+\usepackage{authblk}
+\usepackage{fullpage}
+\usepackage{indentfirst}
+\usepackage{float}
+\usepackage{csvsimple}
+\usepackage{booktabs}
+\usepackage{caption}
+
+\title{Exploratory Data Analysis of Vision Health Disparities in the United States}
+\author{Naveed Alboudwarej, Sachi Sayal, Anvith Thumma}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+
+\section{Introduction}
+Vision impairment remains a major public health concern in the United States, affecting over 12 million adults and costing approximately \$130 billion annually in direct and indirect expenses \cite{REIN2022369}. Beyond financial costs, visual loss has profound consequences for independence, employment, and mental well-being, disproportionately affecting older adults, women, and racial and ethnic minorities \cite{ZAMBELLIWEINER2012S23, ELAM2022e89, ZHANG2012S45}. The prevalence of major conditions such as cataracts, glaucoma, macular degeneration, and diabetic retinopathy is projected to nearly double by 2050, emphasizing the growing need for national surveillance and intervention \cite{10.1001/jamaophthalmol.2017.4655}.  
+
+Structural and geographic inequities exacerbate these disparities. Individuals living in rural or low-resource regions face limited access to ophthalmologic services and delayed diagnoses compared to their urban counterparts \cite{MRA}. Similarly, insurance status plays a key role in determining access to care - patients with Medicaid experience significantly lower appointment acceptance rates and longer wait times than those with private insurance \cite{10.1001/jamaophthalmol.2018.0813}. These barriers intersect with broader social determinants of health, such as income and education, which further contribute to the unequal burden of visual impairment across the population \cite{ZHANG2012S45, ELAM2022e89}.  
+
+The National Academies of Medicine emphasize that eye health should be viewed as a population-level imperative - integrated into chronic disease prevention, healthcare equity, and community-based screening \cite{nationalacademies2016eyehealth}. Aligning with this framework, the Centers for Disease Control and Prevention’s (CDC) Vision and Eye Health Surveillance System (VEHSS) provides the most comprehensive dataset for understanding national trends in vision and eye care \cite{CDC_VEHSS, REIN202115}.  
+
+The purpose of this exploratory data analysis (EDA) is to examine demographic, spatial, and socioeconomic disparities in vision health outcomes using the CDC’s VEHSS Medicare Fee-for-Service dataset. This report presents descriptive statistics and visual analyses across demographic subgroups, explores risk factor patterns, and identifies preliminary trends that will inform predictive modeling in later stages of research. By analyzing variation in prevalence across race, age, sex, geography, and income, this study contributes to understanding how demographic and environmental factors jointly influence eye health outcomes in the United States.
+
+
+\section{Data Sources, Preparation, and Cleaning}
+
+\subsection{Dataset Overview}
+Our primary dataset, the \textit{Medicare Fee-for-Service (FFS) Claims - Vision and Eye Health Surveillance System (VEHSS)} \cite{CDC_VEHSS}, provides aggregated indicators of eye health outcomes derived from Medicare claims between 2014 and 2022. The dataset includes variables for geographic location, age, sex, race/ethnicity, and medical categories related to eye health conditions such as cataracts, glaucoma, and diabetic retinopathy. VEHSS was developed by the Centers for Disease Control and Prevention in collaboration with leading ophthalmic researchers to standardize national surveillance of vision health and identify disparities across population subgroups \cite{REIN202115, ELAM2022e89}.  
+
+Each year, the dataset represents approximately 30 million Medicare beneficiaries, covering 89\% of U.S. adults aged 65 and older. The 37 standardized fields include year, location, topic, question, response, age group, sex, race/ethnicity, risk factors, and the data value representing prevalence (\%). This structure follows the CDC’s surveillance design for consistent public health reporting and facilitates longitudinal analysis across regions \cite{REIN2022369, nationalacademies2016eyehealth}. A subset of the most recent five years (2018–2022) was used to ensure methodological consistency and computational feasibility, aligning with established practices in longitudinal vision-health research \cite{ZHANG2012S45, REIN202115}.
+
+
+\begin{table}[H]
+\centering
+\caption{Summary of VEHSS Dataset Used in Analysis}
+\begin{tabular}{@{}lcc@{}}
+\toprule
+\textbf{Variable Category} & \textbf{Type} & \textbf{Example Entries} \\
+\midrule
+Demographics & Categorical & Age, Sex, Race/Ethnicity \\
+Geography & Categorical & State, Region \\
+Health Condition & Categorical & Cataracts, Glaucoma, Vision Impairment \\
+Risk Factors & Categorical & Diabetes, Hypertension \\
+Prevalence Metric & Numeric & Data\_Value (\%) \\
+Years Analyzed & Temporal & 2018–2022 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Data Cleaning and Feature Refinement}
+Feature cleaning was performed to eliminate redundancy and ensure accurate disaggregation. Umbrella age categories such as “All ages” and “18 years and older” were excluded to prevent double-counting. Only discrete non-overlapping ranges (“0–17,” “18–39,” “40–64,” “65–84,” “85+”) were retained. “Both sexes” entries were removed to maintain clarity between “Male” and “Female.” Racial/ethnic classifications were standardized into four main categories: “White, non-Hispanic,” “Black, non-Hispanic,” “Hispanic (any race),” and “Asian,” following the demographic stratification standards outlined in national surveillance studies and public health equity frameworks \cite{REIN202115, ZHANG2012S45, ELAM2022e89}.  
+
+The \texttt{riskfactor} and \texttt{riskfactorresponse} columns were parsed to separate combined descriptors (e.g., “Diabetes and Glaucoma: Yes”) into distinct categorical variables (\texttt{riskfactor\_clean} and \texttt{risk\_level}). This process improved interpretability and aggregation flexibility, consistent with best practices for multidimensional health surveillance datasets and prior literature linking chronic diseases such as diabetes and glaucoma to vision impairment disparities \cite{Baker2005_AccessVisionCare, REIN202115}.  
+
+Additionally, suppressed or missing records were excluded to align with CDC VEHSS confidentiality thresholds, ensuring compliance with national small-cell suppression policies and maintaining analytic consistency across reporting years \cite{CDC_VEHSS, REIN2022369}. Following cleaning, descriptive statistics were computed using mean \texttt{data\_value} measures across demographic and temporal dimensions to enable fair comparison across population subgroups and timeframes \cite{REIN202115, ZHANG2012S45}.
+
+
+\subsection{Socioeconomic Integration}
+Because income was not included in VEHSS, median household income data were merged from the U.S. Census Bureau’s American Community Survey (ACS) to evaluate socioeconomic disparities, following methods used by Lee et al. (2018) \cite{10.1001/jamaophthalmol.2018.0813}. These values were aligned by state and ethnicity to assess income-vision relationships.
+
+
+\section{Exploratory Data Analysis}
+
+\subsection{Overview of Vision Impairment Data}
+Figure \ref{fig:state_per_year} displays the five U.S. states with the highest mean prevalence of vision impairment among Medicare beneficiaries (2018–2022). Persistent cross-state variation, particularly in the District of Columbia, Hawaii, and Connecticut, suggests structural determinants such as age composition and access to ophthalmologic services \cite{ELAM2022e89}.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.85\textwidth]{Visualization/top_five_states_per_year_impairment.png}
+    \caption{Top Five States by Average Vision Impairment (2018–2022).}
+    \label{fig:state_per_year}
+\end{figure}
+
+\subsection{Racial and Ethnic Disparities}
+As shown in Figure \ref{fig:vision_by_race_ethnicity}, Non-Hispanic Black and Hispanic groups consistently report higher impairment rates than White or Asian populations, reinforcing long-established racial inequities in preventive care and chronic-disease overlap \cite{ZHANG2012S45, 10.1001/jamaophthalmol.2022.4566}.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.85\textwidth]{Visualization/impairment_by_race_overtime.png}
+    \caption{Average Vision Impairment Rates by Race/Ethnicity (2018–2022).}
+    \label{fig:vision_by_race_ethnicity}
+\end{figure}
+
+\begin{table}[H]
+\centering
+\caption{Average Vision Impairment Rates by Race/Ethnicity (2018–2022).}
+\label{tab:vision_by_race_ethnicity}
+\csvautobooktabular{tables/race_year_pivot.csv}
+\end{table}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.85\textwidth]{Visualization/eye_disease_by_race 18 (3).png}
+    \caption{Eye Disease Prevalence by Race/Ethnicity 2018.}
+    \label{fig:eye_disease_by_race 18}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.85\textwidth]{Visualization/eye_disease_by_race 19.png}
+    \caption{Eye Disease Prevalence by Race/Ethnicity 2019.}
+    \label{fig:eye_disease_by_race 19}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.85\textwidth]{Visualization/eye_disease_by_race 20.png}
+    \caption{Eye Disease Prevalence by Race/Ethnicity 2020.}
+    \label{fig:eye_disease_by_race 20}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.85\textwidth]{Visualization/eye_disease_by_race 21.png}
+    \caption{Eye Disease Prevalence by Race/Ethnicity 2021.}
+    \label{fig:eye_disease_by_race 21}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.85\textwidth]{Visualization/eye_disease_by_race 22.png}
+    \caption{Eye Disease Prevalence by Race/Ethnicity 2022.}
+    \label{fig:eye_disease_by_race 22}
+\end{figure}
+The racial and ethnic disparities in eye disease prevalence from 2018-2022 reveal important patterns in ocular health burden and healthcare utilization across diverse populations. Across all study years, screening and imaging/diagnostic tests represent the most prevalent categories for all racial and ethnic groups, though notable variations exist in their absolute rates. White non-Hispanic populations consistently show high rates of screening (approximately 20-23\% in most years) and imaging procedures, suggesting greater healthcare access or utilization. Similarly, Black non-Hispanic and Hispanic any race groups demonstrate substantial engagement with diagnostic services, with screening rates ranging from 20-22\%. Asian and North American Native populations show somewhat more variable patterns, with screening prevalence ranging from approximately 16-21\% depending on the year. The "Other" racial category consistently exhibits high screening rates (approximately 23-24\%), potentially reflecting heterogeneous population characteristics within this classification. \\
+\indent Significant racial disparities emerge in specific disease categories and their treatments. Glaucoma and glaucoma treatment show elevated prevalence among Black non-Hispanic individuals compared to other groups, consistent with established epidemiological patterns of this population's higher susceptibility to glaucoma. Diabetic eye diseases and their corresponding treatments appear notably elevated in Hispanic populations and North American Native groups, aligning with known higher diabetes prevalence in these communities. The 2021 data anomaly—characterized by dramatic spikes in "Injury, Burns and Surgical Complications" (reaching 33-35\% in White non-Hispanic populations) and "Other Retinal Disorders" (24-29\% in Black non-Hispanic and Hispanic groups)—affects all racial and ethnic groups but with varying magnitudes, further suggesting systemic data collection or coding issues during that year rather than race-specific clinical phenomena. Cataract-related conditions and surgeries show relatively uniform distribution across groups in 2018-2020 and 2022, though with slightly elevated rates in older-skewing populations. The data underscore the importance of culturally competent, accessible eye care services across all racial and ethnic groups, while also highlighting the need for targeted interventions addressing specific disease burdens in high-risk populations, particularly glaucoma screening in Black communities and diabetic retinopathy management in Hispanic and Native American populations.
+
+\subsection{Age and Sex Trends}
+Age-related conditions continue to dominate impairment patterns. Figure \ref{fig:vision_by_age_group} shows that individuals aged 85+ exhibit the highest prevalence, exceeding 10\% in most years. This aligns with findings from Taylor et al. (2004) and Chan et al. (2018) \cite{10.1167/iovs.03-1198, 10.1001/jamaophthalmol.2017.4655}.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.85\textwidth]{Visualization/impairment_by_age_group.png}
+    \caption{Average Vision Impairment Rates by Age Group (2018–2022).}
+    \label{fig:vision_by_age_group}
+\end{figure}
+
+Females exhibit higher impairment rates than males (Figure \ref{fig:vision_by_sex}), consistent with Zambelli-Weiner et al. (2012) \cite{ZAMBELLIWEINER2012S23}, reflecting longevity and care access differences.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.85\textwidth]{Visualization/Sex_impairment.png}
+    \caption{Average Vision Impairment Rates by Sex (2018–2022).}
+    \label{fig:vision_by_sex}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \begin{minipage}{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{Visualization/eye_disease_by_sex18 (2).png}
+        \caption{Eye Disease Prevalence by Sex 2018.}
+        \label{fig:eye_disease_by_sex18}
+    \end{minipage}\hfill
+    \begin{minipage}{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{Visualization/eye_disease_by_sex 19.png}
+        \caption{Eye Disease Prevalence by Sex 2019.}
+        \label{fig:eye_disease_by_sex 19}
+    \end{minipage}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \begin{minipage}{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{Visualization/eye_disease_by_sex 20.png}
+        \caption{Eye Disease Prevalence by Sex 2020.}
+        \label{fig:eye_disease_by_sex 20}
+    \end{minipage}\hfill
+    \begin{minipage}{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{Visualization/eye_disease_by_sex 21.png}
+        \caption{Eye Disease Prevalence by Sex 2021.}
+        \label{fig:eye_disease_by_sex 21}
+    \end{minipage}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.85\textwidth]{Visualization/eye_disease_by_sex 22.png}
+    \caption{Eye Disease Prevalence by Sex 2022.}
+    \label{fig:eye_disease_by_sex 22}
+\end{figure}
+
+In examining eye disease prevalence across the 2018-2022 period, several notable patterns emerge from the data. The prevalence landscape shows considerable variation both across conditions and over time, with imaging and diagnostic testing representing one of the most common categories throughout most of the study period, typically affecting 17-20 \% of the population. A striking anomaly appears in 2021, where "Injury, Burns and Surgical Complications of the Eye" shows an unprecedented spike to approximately 35 \% prevalence for both sexes, alongside a similar surge in "Other Retinal Disorders" reaching around 23 \%—both substantially higher than in adjacent years. This 2021 spike may suggest data collection inconsistencies, changes in coding practices, or genuine clinical phenomena warranting further investigation. Common conditions such as cataracts, cataract surgery, and other eye disorders consistently affect 10-17\% of the population, with relatively stable prevalence across years. Sex-based differences are generally modest, though females show slightly elevated rates for certain conditions like cataracts and orbital diseases in the earlier years of observation. The data also reveals substantial engagement with eye care services, as evidenced by high rates of screening and various treatment categories. The year 2022 shows a shift in the prevalence profile, with conditions appearing more evenly distributed and several new categories emerging in the classification scheme, potentially reflecting evolving diagnostic or reporting standards in eye care surveillance.
+
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.85\textwidth]{Visualization/Sex_impairment.png}
+    \caption{Average Vision Impairment Rates by Sex (2018–2022).}
+    \label{fig:vision_by_sex}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.85\textwidth]{Visualization/eye_disease_by_age 18 (1).png}
+    \caption{Eye Disease By Age Groups 2018.}
+    \label{fig:eye_disease_by_age 18}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.85\textwidth]{Visualization/eye_disease_by_age(updated 19).png}
+    \caption{Eye Disease By Age Groups 2019.}
+    \label{fig:eye_disease_by_age 19}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.85\textwidth]{Visualization/eye_disease_by_age(updated 21).png}
+    \caption{Eye Disease By Age Groups 2020.}
+    \label{fig:eye_disease_by_age 20}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.85\textwidth]{Visualization/eye_disease_by_age (updated 20).png}
+    \caption{Eye Disease By Age Groups 2021.}
+    \label{fig:eye_disease_by_age 21}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.85\textwidth]{Visualization/eye_disease_by_age(updated 22).png}
+    \caption{Eye Disease By Age Groups 2022.}
+    \label{fig:eye_disease_by_age 22}
+\end{figure}
+
+The age-stratified analysis of eye disease prevalence from 2018-2022 reveals clear age-related patterns and temporal anomalies in the distribution of ocular conditions. Across all years, there is a pronounced age gradient in disease burden, with the youngest cohort (0-17 years) showing minimal eye disease prevalence across most categories, while older age groups demonstrate progressively increasing rates of age-related conditions. The 40-64 year and 65-84 year age groups consistently show the highest overall disease burden, particularly for conditions such as cataracts, screening procedures, imaging and diagnostic tests, and various treatment categories. Age-related macular degeneration, as expected, shows negligible prevalence in younger groups but becomes more prominent in the 65+ populations. A striking feature across the dataset is the dramatic spike in certain conditions during 2021, where "Injury, Burns and Surgical Complications of the Eye" reaches unprecedented levels of approximately 32-35\% in the 40-64 and 65-84 age groups, while "Other Visual Disturbances" peaks at nearly 28\% in the 85+ cohort—both substantially exceeding rates observed in adjacent years. This 2021 anomaly, along with elevated "Other Retinal Disorders" prevalence (reaching 17-23\% across middle-aged and older groups), suggests potential data quality issues, coding changes, or COVID-19 pandemic-related impacts on healthcare delivery and recording practices. Treatment-related categories, including cataract surgery, glaucoma treatment, and diabetic retinopathy management, show expected age-dependent increases, with the 65-84 and 85+ groups receiving the highest intervention rates. The data also demonstrates relatively stable patterns in 2018-2020 and 2022, with 2021 standing out as an outlier year requiring further investigation to understand whether the observed spikes reflect genuine clinical phenomena or methodological artifacts in data collection.Retry
+
+\subsection{Temporal and Spatial Patterns}
+Figure \ref{fig:Change_in_impairment_over_time} shows that while most states saw marginal declines in impairment between 2018–2022, progress remains uneven, particularly in southern states.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.85\textwidth]{Visualization/Bar_change_impairment.png}
+    \caption{Change in Average Vision Impairment Rates (2018–2022).}
+    \label{fig:Change_in_impairment_over_time}
+\end{figure}
+
+Spatial variation (Figure \ref{fig:map_impairment_change}) further reveals limited improvement in rural and lower-income states, echoing Allison et al. (2023) on rural-urban disparities \cite{MRA}.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1.0\textwidth]{Visualization/change_in_impairment_overtime.png}
+    \caption{State-Level Change in Vision Impairment (2018–2022).}
+    \label{fig:map_impairment_change}
+\end{figure}
+
+\subsection{Category and Risk Factor Analysis}
+Eye conditions such as “Any Eye Condition” and “Eye Exams” show the highest prevalence, while specific diagnoses like glaucoma or diabetic retinopathy show stable but moderate values (Figure \ref{fig:category_impairment}) \cite{REIN2022369}.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.85\textwidth]{Visualization/category_change_impairment.png}
+    \caption{Average Vision Impairment by Diagnostic Category (2018–2022).}
+    \label{fig:category_impairment}
+\end{figure}
+
+\begin{table}[H]
+\centering
+\caption{Average Vision Impairment Rates by Category (2018–2022).}
+\label{tab:category_impairment}
+\csvautobooktabular{tables/category_table.csv}
+\end{table}
+
+Risk factor segmentation (Figure \ref{fig:risk_impairment}) demonstrates higher impairment prevalence among individuals with diabetes or hypertension, consistent with Baker et al. (2005) \cite{Baker2005_AccessVisionCare}.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.85\textwidth]{Visualization/impairment_and_risk_factor.png}
+    \caption{Vision Impairment by Health Risk Factors (2018–2022).}
+    \label{fig:risk_impairment}
+\end{figure}
+
+\subsection{Socioeconomic Comparisons}
+Figures \ref{fig:Ovr income}–\ref{fig:native income} visualize median household income by race/ethnicity. Consistent with Lee et al. (2018) \cite{10.1001/jamaophthalmol.2018.0813}, minority populations - especially Black, Hispanic, and Native American groups - display significantly lower incomes, correlating with limited access to eye care.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\linewidth]{Visualization/overall_income.png}
+    \caption{Median Household Income (2018–2022).}
+    \label{fig:Ovr income}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\linewidth]{Visualization/white_income.png}
+    \caption{White Median Household Income (2018–2022).}
+    \label{fig:White income}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\linewidth]{Visualization/black_income.png}
+    \caption{Black Median Household Income (2018–2022).}
+    \label{fig:black income}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\linewidth]{Visualization/hispanic_income.png}
+    \caption{Hispanic Median Household Income (2018–2022).}
+    \label{fig:hispanic income}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\linewidth]{Visualization/native_income.png}
+    \caption{Native American/Indigenous Median Household Income (2018–2022).}
+    \label{fig:native income}
+\end{figure}
+
+
+\section{Discussion and Implications}
+The exploratory analysis reveals strong, persistent disparities in vision health outcomes across racial, gender, and socioeconomic dimensions. Non-Hispanic Black and Hispanic groups experience disproportionately high rates of visual impairment, often linked to systemic inequities in healthcare access, chronic disease prevalence, and neighborhood-level disadvantage \cite{ZHANG2012S45, 10.1001/jamaophthalmol.2022.4566, ELAM2022e89}. Geographic variation further demonstrates that states with lower median income and higher minority concentration tend to report reduced access to preventive services and higher prevalence of advanced vision impairment, reflecting a convergence of racial and economic determinants \cite{REIN2022369, MRA}.  
+
+Women and elderly adults consistently exhibit higher impairment rates due to biological aging processes, longer life expectancy, and differential exposure to degenerative eye diseases such as cataracts and macular degeneration \cite{10.1167/iovs.03-1198, 10.1001/jamaophthalmol.2017.4655}. These findings are consistent with national epidemiological studies indicating that female longevity contributes to a greater cumulative lifetime risk of vision loss, while age remains the strongest predictor of ocular morbidity \cite{REIN202115, nationalacademies2016eyehealth}.  
+
+Chronic disease comorbidities—particularly diabetes, hypertension, and glaucoma—further exacerbate visual impairment rates. The relationship between these systemic conditions and vision outcomes underscores the need for integrated public health strategies that bridge ophthalmologic and primary care systems \cite{Baker2005_AccessVisionCare, ZAMBELLIWEINER2012S23}. Comprehensive disease management programs focusing on early diabetic eye screening, hypertension control, and health literacy could mitigate much of the preventable burden observed in vulnerable populations.  
+
+Spatial and temporal trends from 2018 to 2022 reveal that national progress has been incremental rather than transformative, mirroring stagnation patterns observed in prior national surveillance reports \cite{REIN202115}. Despite the widespread availability of preventive screening technologies and treatment interventions, the data indicate minimal reduction in disparities over time, highlighting the persistence of structural barriers such as healthcare affordability, transportation access, and limited provider density in rural regions \cite{MRA, 10.1001/jamaophthalmol.2018.0813}.  
+
+From a methodological standpoint, several limitations constrain interpretation. The VEHSS dataset primarily captures Medicare beneficiaries, thereby excluding uninsured individuals and younger adults who may face even greater unmet vision-care needs \cite{10.1001/jamaophthalmol.2018.0813, REIN2022369}. Furthermore, aggregated reporting and small-cell suppression restrict finer-grained analysis at the intersection of race, income, and comorbidity—necessitating complementary data sources such as the Behavioral Risk Factor Surveillance System (BRFSS) or National Health Interview Survey (NHIS) for future integration \cite{REIN202115, CDC_VEHSS}.  
+
+Ultimately, the findings underscore that socioeconomic and demographic determinants remain the central barriers to achieving equitable vision care in the United States. These results establish a foundation for the next phase of research, which will apply machine learning and predictive analytics to identify high-risk counties, model disparity trajectories, and evaluate the effectiveness of potential policy interventions aimed at promoting vision health equity nationwide \cite{ELAM2022e89, REIN202115}.
+
+
+\section{Conclusion}
+This exploratory data analysis provides a comprehensive view of vision health disparities across the U.S. Medicare population (2018–2022). Despite slight improvements, inequities persist across racial, age, and socioeconomic lines. The results align with existing literature \cite{REIN2022369, ELAM2022e89} and underscore the importance of targeted, equity-driven eye health initiatives.  
+
+Persistent disparities among non-Hispanic Black, Hispanic, and low-income populations reflect enduring structural barriers in access to preventive services, diagnosis, and treatment \cite{ZHANG2012S45, 10.1001/jamaophthalmol.2018.0813}. The stability of impairment rates across time suggests that current interventions have plateaued in effectiveness, emphasizing the need for integrated public health policies that merge ophthalmologic care with chronic disease prevention \cite{Baker2005_AccessVisionCare, REIN202115}.  
+
+Future work will focus on developing predictive machine learning models using expanded datasets such as BRFSS and NHIS to identify high-risk regions and evaluate the potential impact of targeted policy interventions. By combining demographic, geographic, and socioeconomic dimensions, this research aims to support a data-driven framework for achieving equitable vision health outcomes across the United States.
+
+
+\bibliographystyle{abbrv}
+\bibliography{refs}
+
+\end{document}
